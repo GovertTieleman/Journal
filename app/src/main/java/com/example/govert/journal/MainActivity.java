@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -20,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
         // initialize entryList
         ArrayList<JournalEntry> entryList = new ArrayList<>();
+
+        entryList.add(new JournalEntry(new Date(), "jemoeder", "kanker", "dit is een kutopdracht"));
+        entryList.add(new JournalEntry(new Date(), "jevader", "aids", "dit is een tyfusopdracht"));
+        entryList.add(new JournalEntry(new Date(), "jezuster", "lelijk", "dit is een hoerenopdracht"));
+
 
         // pass entryList to adapter
         EntryAdapter adapter = new EntryAdapter(this, 0, entryList);
