@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    tools:context=".DetailActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:text="00/00/0000"
+        android:gravity="center"
+        android:id="@+id/dateTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/titleTextView"/>
+
+    <TextView
+        android:text="Title"
+        android:gravity="center"
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/dateTextView"
+        app:layout_constraintBottom_toTopOf="@id/moodTextView"/>
+
+    <TextView
+        android:text="Mood"
+        android:gravity="center"
+        android:id="@+id/moodTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintBottom_toTopOf="@id/entryTextView"/>
+
+    <TextView
+        android:id="@+id/entryTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="top|start"
+        android:text="Entry"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/moodTextView" />
+
+</android.support.constraint.ConstraintLayout>

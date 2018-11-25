@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".InputActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:gravity="top|start"
+        android:hint="Title"
+        android:id="@+id/titleEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textCapWords"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/moodEditText"
+        app:layout_constraintRight_toLeftOf="@id/submitButton"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <EditText
+        android:gravity="top|start"
+        android:hint="Mood"
+        android:id="@+id/moodEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapWords"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/titleEditText"
+        app:layout_constraintBottom_toTopOf="@id/entryEditText"/>
+
+    <EditText
+        android:hint="Entry"
+        android:gravity="top|start"
+        android:id="@+id/entryEditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:inputType="textMultiLine"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/moodEditText"/>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:onClick="submitEntry"
+        app:layout_constraintBottom_toTopOf="@id/moodEditText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
