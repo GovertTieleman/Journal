@@ -9,6 +9,7 @@
 
     <TextView
         android:text="00/00/0000"
+        android:paddingBottom="8dp"
         android:gravity="center"
         android:id="@+id/dateTextView"
         android:layout_width="match_parent"
@@ -19,6 +20,7 @@
 
     <TextView
         android:text="Title"
+        android:paddingBottom="8dp"
         android:gravity="center"
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
@@ -29,6 +31,7 @@
 
     <TextView
         android:text="Mood"
+        android:paddingBottom="8dp"
         android:gravity="center"
         android:id="@+id/moodTextView"
         android:layout_width="match_parent"

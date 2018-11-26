@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
         // initialize entryList
         ArrayList<JournalEntry> entryList = new ArrayList<>();
 
-        entryList.add(new JournalEntry(new Date(), "jemoeder", "kanker", "dit is een kutopdracht"));
-        entryList.add(new JournalEntry(new Date(), "jevader", "aids", "dit is een tyfusopdracht"));
-        entryList.add(new JournalEntry(new Date(), "jezuster", "lelijk", "dit is een hoerenopdracht"));
+        entryList.add(new JournalEntry(1, new Date(), "jemoeder", "kanker", "dit is een kutopdracht"));
+        entryList.add(new JournalEntry(2, new Date(), "jevader", "aids", "dit is een tyfusopdracht"));
+        entryList.add(new JournalEntry(3, new Date(), "jezuster", "lelijk", "dit is een hoerenopdracht"));
 
 
         // pass entryList to adapter
@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
         // set listener for listView
         listView.setOnItemClickListener(new ListItemClickListener());
+
+        EntryDatabase db = EntryDatabase.getInstance(getApplicationContext());
     }
 
     public void newEntry(View view) {
