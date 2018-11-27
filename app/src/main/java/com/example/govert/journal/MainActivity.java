@@ -1,59 +1,94 @@
 package com.example.govert.journal;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+    private EntryDatabaseHelper db;
+    private EntryAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // set listView
+        // get listView
         ListView listView = (ListView) findViewById(R.id.entryList);
 
-        // initialize entryList
-        ArrayList<JournalEntry> entryList = new ArrayList<>();
+        // get database
+        db = EntryDatabaseHelper.getInstance(this);
 
-        entryList.add(new JournalEntry(1, new Date(), "jemoeder", "kanker", "dit is een kutopdracht"));
-        entryList.add(new JournalEntry(2, new Date(), "jevader", "aids", "dit is een tyfusopdracht"));
-        entryList.add(new JournalEntry(3, new Date(), "jezuster", "lelijk", "dit is een hoerenopdracht"));
+        // get cursor
+        Cursor cursor = db.selectALL();
 
-
-        // pass entryList to adapter
-        EntryAdapter adapter = new EntryAdapter(this, 0, entryList);
+        // get adapter
+        adapter = new EntryAdapter(this, cursor);
 
         // set adapter
         listView.setAdapter(adapter);
 
-        // set listener for listView
-        listView.setOnItemClickListener(new ListItemClickListener());
+        // set listeners
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // get cursor
+                Cursor clickedEntryCursor = (Cursor) parent.getItemAtPosition(position);
 
-        EntryDatabase db = EntryDatabase.getInstance(getApplicationContext());
+                // get properties
+                Integer _id = clickedEntryCursor.getInt(clickedEntryCursor.getColumnIndex("_id"));
+                String date = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("date"));
+                String title = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("title"));
+                String mood = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("mood"));
+                String entry = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("entry"));
+
+                // create JournalEntry instance
+                JournalEntry clickedEntry = new JournalEntry(_id, date, title, mood, entry);
+
+                // make intent
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                intent.putExtra("clickedEntry", clickedEntry);
+
+                // start DetailActivity with intent
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                // get cursor
+                Cursor clickedEntryCursor = (Cursor) parent.getItemAtPosition(position);
+
+                // get id
+                Integer _id = clickedEntryCursor.getInt(clickedEntryCursor.getColumnIndex("_id"));
+
+                // call delete function
+                db.delete(_id);
+
+                // update interface
+                updateData();
+                return true;
+            }
+        });
     }
 
     public void newEntry(View view) {
-        Intent intent = new Intent(MainActivity.this, InputActivity.class);
-        startActivity(intent);
+        finish();
+        startActivity(new Intent(MainActivity.this, InputActivity.class));
     }
 
-    private class ListItemClickListener implements AdapterView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // make intent and include the instance of journalEntry
-            JournalEntry journalEntry = (JournalEntry) parent.getItemAtPosition(position);
-            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-            intent.putExtra("entry", journalEntry);
+    private void updateData() {
+        // get new cursor
+        Cursor cursor = db.selectALL();
 
-            // start DetailActivity with intent
-            startActivity(intent);
-        }
+        // swap cursor
+        adapter.swapCursor(cursor);
     }
 }

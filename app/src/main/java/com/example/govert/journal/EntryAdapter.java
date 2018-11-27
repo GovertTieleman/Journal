@@ -1,54 +1,37 @@
 package com.example.govert.journal;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-public class EntryAdapter extends ArrayAdapter<JournalEntry> {
-    // initialize context and entryList
-    private List<JournalEntry> entryList;
-
-    public EntryAdapter(@NonNull Context context, int resource, List<JournalEntry> list) {
-        super(context, resource, list);
-
-        // set context and entryList
-        entryList = list;
+public class EntryAdapter extends ResourceCursorAdapter {
+    public EntryAdapter(@NonNull Context context, Cursor cursor) {
+        super(context, R.layout.entry_row, cursor);
     }
 
-    @NonNull
+    // inflate and return new view
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        // get listItem
-        View listItem = convertView;
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        return LayoutInflater.from(context).inflate(R.layout.entry_row, parent, false);
+    }
 
-        // inflate listItem if null
-        if(listItem == null)
-            listItem = LayoutInflater.from(getContext()).inflate(R.layout.entry_row, parent,false);
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        // get views
+        TextView dateTextView = (TextView) view.findViewById(R.id.dateTextView);
+        TextView titleTextView = (TextView) view.findViewById(R.id.titleTextView);
 
-        // get JournalEntry
-        JournalEntry currentEntry = entryList.get(position);
+        // get properties
+        String date = cursor.getString(cursor.getColumnIndex("date"));
+        String title = cursor.getString(cursor.getColumnIndex("title"));
 
-        // set date
-        TextView dateView = (TextView) listItem.findViewById(R.id.dateTextView);
-        Date date = currentEntry.getDate();
-        DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy");
-        String dateString = dateFormat.format(date);
-        dateView.setText(dateString);
-
-        // set title
-        TextView titleView = (TextView) listItem.findViewById(R.id.titleTextView);
-        titleView.setText(currentEntry.getTitle());
-
-        return listItem;
+        // set views
+        dateTextView.setText(date);
+        titleTextView.setText(title);
     }
 }

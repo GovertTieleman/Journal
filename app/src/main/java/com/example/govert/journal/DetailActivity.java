@@ -1,14 +1,10 @@
 package com.example.govert.journal;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -18,14 +14,11 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         // get retrievedEntry
-        JournalEntry currentEntry = (JournalEntry) getIntent().getSerializableExtra("entry");
+        JournalEntry currentEntry = (JournalEntry) getIntent().getSerializableExtra("clickedEntry");
 
         // set date, title, mood and entry
         TextView dateView = (TextView) findViewById(R.id.dateTextView);
-        Date date = currentEntry.getDate();
-        DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy");
-        String dateString = dateFormat.format(date);
-        dateView.setText(dateString);
+        dateView.setText(currentEntry.getDate());
 
         TextView titleView = (TextView) findViewById(R.id.titleTextView);
         titleView.setText(currentEntry.getTitle());
@@ -35,5 +28,10 @@ public class DetailActivity extends AppCompatActivity {
 
         TextView entryView = (TextView) findViewById(R.id.entryTextView);
         entryView.setText(currentEntry.getEntry());
+    }
+
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

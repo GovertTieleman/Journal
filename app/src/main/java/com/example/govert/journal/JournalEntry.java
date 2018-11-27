@@ -1,18 +1,17 @@
 package com.example.govert.journal;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class JournalEntry implements Serializable {
 
     private Integer id;
-    private Date date;
+    private String date;
     private String title;
     private String mood;
     private String entry;
 
     // constructor to create instance of JournalEntry
-    public JournalEntry(Integer id, Date date, String title, String mood, String entry) {
+    public JournalEntry(Integer id, String date, String title, String mood, String entry) {
         this.id = id;
         this.date = date;
         this.title = title;
@@ -21,7 +20,7 @@ public class JournalEntry implements Serializable {
         this.entry = entry;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -45,7 +44,7 @@ public class JournalEntry implements Serializable {
         this.id = id;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
