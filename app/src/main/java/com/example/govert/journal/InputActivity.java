@@ -48,9 +48,4 @@ public class InputActivity extends AppCompatActivity {
         finish();
         startActivity(new Intent(this, MainActivity.class));
     }
-
-    public void onBackPressed() {
-        finish();
-        startActivity(new Intent(this, MainActivity.class));
-    }
 }

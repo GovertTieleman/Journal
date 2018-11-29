@@ -34,61 +34,56 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         // set listeners
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // get cursor
-                Cursor clickedEntryCursor = (Cursor) parent.getItemAtPosition(position);
-
-                // get properties
-                Integer _id = clickedEntryCursor.getInt(clickedEntryCursor.getColumnIndex("_id"));
-                String date = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("date"));
-                String title = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("title"));
-                String mood = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("mood"));
-                String entry = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("entry"));
-
-                // create JournalEntry instance
-                JournalEntry clickedEntry = new JournalEntry(_id, date, title, mood, entry);
-
-                // make intent
-                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra("clickedEntry", clickedEntry);
-
-                // start DetailActivity with intent
-                finish();
-                startActivity(intent);
-            }
-        });
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                // get cursor
-                Cursor clickedEntryCursor = (Cursor) parent.getItemAtPosition(position);
-
-                // get id
-                Integer _id = clickedEntryCursor.getInt(clickedEntryCursor.getColumnIndex("_id"));
-
-                // call delete function
-                db.delete(_id);
-
-                // update interface
-                updateData();
-                return true;
-            }
-        });
+        listView.setOnItemClickListener(new ListItemClickListener());
+        listView.setOnItemLongClickListener(new ListItemLongClickListener());
     }
 
     public void newEntry(View view) {
-        finish();
         startActivity(new Intent(MainActivity.this, InputActivity.class));
     }
 
     private void updateData() {
-        // get new cursor
-        Cursor cursor = db.selectALL();
+        // update cursor
+        adapter.swapCursor(db.selectALL());
+    }
 
-        // swap cursor
-        adapter.swapCursor(cursor);
+    private class ListItemClickListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // get cursor
+            Cursor clickedEntryCursor = (Cursor) parent.getItemAtPosition(position);
+
+            // get properties
+            Integer _id = clickedEntryCursor.getInt(clickedEntryCursor.getColumnIndex("_id"));
+            String date = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("date"));
+            String title = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("title"));
+            String mood = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("mood"));
+            String entry = clickedEntryCursor.getString(clickedEntryCursor.getColumnIndex("entry"));
+
+            // create JournalEntry instance
+            JournalEntry clickedEntry = new JournalEntry(_id, date, title, mood, entry);
+
+            // make intent
+            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            intent.putExtra("clickedEntry", clickedEntry);
+
+            // start DetailActivity with intent
+            startActivity(intent);
+        }
+    }
+
+    private class ListItemLongClickListener implements AdapterView.OnItemLongClickListener {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            // get cursor
+            Cursor clickedEntryCursor = (Cursor) parent.getItemAtPosition(position);
+
+            // delete entry
+            db.delete(clickedEntryCursor.getInt(clickedEntryCursor.getColumnIndex("_id")));
+
+            // update interface
+            updateData();
+            return true;
+        }
     }
 }

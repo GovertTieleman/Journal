@@ -15,7 +15,6 @@ public class JournalEntry implements Serializable {
         this.id = id;
         this.date = date;
         this.title = title;
-
         this.mood = mood;
         this.entry = entry;
     }
@@ -38,25 +37,5 @@ public class JournalEntry implements Serializable {
 
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setMood(String mood) {
-        this.mood = mood;
-    }
-
-    public void setEntry(String entry) {
-        this.entry = entry;
     }
 }

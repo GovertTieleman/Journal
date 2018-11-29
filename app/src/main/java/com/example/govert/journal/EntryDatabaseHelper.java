@@ -49,7 +49,8 @@ public class EntryDatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor selectALL() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT _id, date, title, mood, entry FROM journal_entries", null);
+        return db.rawQuery("SELECT _id, date, title, mood, entry FROM journal_entries",
+                null);
     }
 
     public void insert(JournalEntry entry) {

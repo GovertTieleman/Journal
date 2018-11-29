@@ -29,9 +29,4 @@ public class DetailActivity extends AppCompatActivity {
         TextView entryView = (TextView) findViewById(R.id.entryTextView);
         entryView.setText(currentEntry.getEntry());
     }
-
-    public void onBackPressed() {
-        finish();
-        startActivity(new Intent(this, MainActivity.class));
-    }
 }
