@@ -16,20 +16,87 @@
         android:inputType="textCapWords"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/moodEditText"
+        app:layout_constraintBottom_toTopOf="@id/happy"
         app:layout_constraintRight_toLeftOf="@id/submitButton"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <EditText
-        android:gravity="top|start"
-        android:hint="Mood"
-        android:id="@+id/moodEditText"
+    <ImageView
+        android:id="@+id/happier"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/happier"
+        app:layout_constraintTop_toBottomOf="@id/titleEditText"
+        app:layout_constraintBottom_toTopOf="@id/rg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/happy"
+        />
+
+    <ImageView
+        android:id="@+id/happy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/titleEditText"
+        app:layout_constraintBottom_toTopOf="@id/rg"
+        app:srcCompat="@drawable/happy"
+        app:layout_constraintLeft_toRightOf="@id/happier"
+        app:layout_constraintRight_toLeftOf="@id/sad"/>
+
+    <ImageView
+        android:id="@+id/sad"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/titleEditText"
+        app:layout_constraintBottom_toTopOf="@id/rg"
+        app:srcCompat="@drawable/sad"
+        app:layout_constraintRight_toLeftOf="@id/sadder"
+        app:layout_constraintLeft_toRightOf="@id/happy"
+        />
+
+    <ImageView
+        android:id="@+id/sadder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/titleEditText"
+        app:layout_constraintBottom_toTopOf="@id/rg"
+        app:srcCompat="@drawable/sadder"
+        app:layout_constraintLeft_toRightOf="@id/sad"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <RadioGroup
+        android:id="@+id/rg"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textCapWords"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/titleEditText"
-        app:layout_constraintBottom_toTopOf="@id/entryEditText"/>
+        app:layout_constraintBottom_toTopOf="@id/entryEditText"
+        app:layout_constraintTop_toBottomOf="@id/happy"
+        >
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </RadioGroup>
 
     <EditText
         android:hint="Entry"
@@ -40,7 +107,7 @@
         android:inputType="textMultiLine"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/moodEditText"/>
+        app:layout_constraintTop_toBottomOf="@id/rg"/>
 
     <Button
         android:id="@+id/submitButton"
@@ -48,7 +115,6 @@
         android:layout_height="wrap_content"
         android:text="Submit"
         android:onClick="submitEntry"
-        app:layout_constraintBottom_toTopOf="@id/moodEditText"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 

@@ -1,8 +1,8 @@
 package com.example.govert.journal;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -23,10 +23,29 @@ public class DetailActivity extends AppCompatActivity {
         TextView titleView = (TextView) findViewById(R.id.titleTextView);
         titleView.setText(currentEntry.getTitle());
 
-        TextView moodView = (TextView) findViewById(R.id.moodTextView);
-        moodView.setText(currentEntry.getMood());
+        ImageView moodView = (ImageView) findViewById(R.id.moodImageView);
+        switch (currentEntry.getMood()) {
+            case "happier":
+                moodView.setImageResource(R.drawable.happier);
+                break;
+            case "happy":
+                moodView.setImageResource(R.drawable.happy);
+                break;
+            case "sad":
+                moodView.setImageResource(R.drawable.sad);
+                break;
+            case "sadder":
+                moodView.setImageResource(R.drawable.sadder);
+                break;
+        }
 
         TextView entryView = (TextView) findViewById(R.id.entryTextView);
         entryView.setText(currentEntry.getEntry());
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
